@@ -11,7 +11,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addPatient = exports.getPatients = void 0;
+exports.addPatient = exports.getPatientById = exports.getPatients = void 0;
 const uuid_1 = require("uuid");
 const patients_1 = require("../data/patients");
 const getPatients = () => {
@@ -21,6 +21,11 @@ const getPatients = () => {
     });
 };
 exports.getPatients = getPatients;
+const getPatientById = (id) => {
+    const patientToFind = patients_1.patientsData.find((patient) => patient.id === id);
+    return patientToFind;
+};
+exports.getPatientById = getPatientById;
 const addPatient = (data) => {
     const id = (0, uuid_1.v1)();
     const newPatientEntry = Object.assign({ id }, data);

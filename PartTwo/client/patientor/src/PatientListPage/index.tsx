@@ -7,7 +7,7 @@ import AddPatientModal from "../AddPatientModal";
 import { Patient } from "../types";
 import { apiBaseUrl } from "../constants";
 import HealthRatingBar from "../components/HealthRatingBar";
-import { useStateValue } from "../state";
+import { addPatient, useStateValue } from "../state";
 import { TableCell } from "@material-ui/core";
 import { TableRow } from "@material-ui/core";
 import { TableBody } from "@material-ui/core";
@@ -25,27 +25,29 @@ const PatientListPage = () => {
     setError(undefined);
   };
 
+  console.log(patients);
+
   const submitNewPatient = (values: PatientFormValues) => {
-      (async () => {
-        try {
-          const { data: newPatient } = await axios.post<Patient>(
-            `${apiBaseUrl}/patients`,
-            values
+    (async () => {
+      try {
+        const { data: newPatient } = await axios.post<Patient>(
+          `${apiBaseUrl}/patients`,
+          values
+        );
+        dispatch(addPatient(newPatient));
+        closeModal();
+      } catch (e: unknown) {
+        if (axios.isAxiosError(e)) {
+          console.error(e?.response?.data || "Unrecognized axios error");
+          setError(
+            String(e?.response?.data?.error) || "Unrecognized axios error"
           );
-          dispatch({ type: "ADD_PATIENT", payload: newPatient });
-          closeModal();
-        } catch (e: unknown) {
-          if (axios.isAxiosError(e)) {
-            console.error(e?.response?.data || "Unrecognized axios error");
-            setError(
-              String(e?.response?.data?.error) || "Unrecognized axios error"
-            );
-          } else {
-            console.error("Unknown error", e);
-            setError("Unknown error");
-          }
+        } else {
+          console.error("Unknown error", e);
+          setError("Unknown error");
         }
-      })().catch((err: unknown) => console.log(err));
+      }
+    })().catch((err: unknown) => console.log(err));
   };
 
   return (

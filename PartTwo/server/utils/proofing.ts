@@ -12,7 +12,7 @@ export const newPatientEntryProofing = (object: any): Omit<PatientsEntry, "id"> 
   if (!Object.values(Gender).includes(object.gender))
     throw new Error("Wrong enum type gender");
 
-  const { name, dateOfBirth, gender, ssn, occupation } = object;
-  return { name, dateOfBirth, gender, ssn, occupation } 
+  const { name, dateOfBirth, gender, ssn, occupation, entries } = object;
+  return { name, dateOfBirth, gender, ssn, occupation, entries } 
 };
 

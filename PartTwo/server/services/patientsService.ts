@@ -10,12 +10,17 @@ export const getPatients = (): Omit<PatientsEntry, "ssn">[] => {
   });
 };
 
+export const getPatientById = (id: string): PatientsEntry | undefined => {
+  const patientToFind = patientsData.find((patient) => patient.id === id);
+  return patientToFind;
+};
+
 export const addPatient = (data: Omit<PatientsEntry, "id">): PatientsEntry => {
   const id = uuid();
   const newPatientEntry = {
     id,
     ...data,
   };
-  patientsData.push(newPatientEntry)
+  patientsData.push(newPatientEntry);
   return newPatientEntry;
 };
