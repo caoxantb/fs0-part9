@@ -38,9 +38,9 @@ const EntryComponent = ({ entry }: { entry: Entry }) => {
       <div>Specialist: {entry.specialist}</div>
       {entry.diagnosisCodes ? (
         <ul>
-          {entry.diagnosisCodes.map((d) => (
+          {entry?.diagnosisCodes.map((d) => (
             <li key={d}>
-              {d} {diagnosis[d].name}
+              {d} {diagnosis[d]?.name}
             </li>
           ))}
         </ul>
