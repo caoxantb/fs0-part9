@@ -24,9 +24,9 @@ export const addPatient = (data: Omit<PatientsEntry, "id">): PatientsEntry => {
   return newPatientEntry;
 };
 
-export const addEntryToPatient = (patientId: string, entry: Entry): Entry => {
+export const addEntryToPatient = (patientId: string, entry: Omit<Entry, 'id'>): Entry => {
   const id = uuid();
-  const newEntry = { ...entry, id };
+  const newEntry: any = { ...entry, id };
 
   const patientToAddIndex = patientsData.findIndex(
     (patient) => patient.id === patientId

@@ -22,7 +22,6 @@ const entryType = (entry: Entry) => {
 
 const EntryComponent = ({ entry }: { entry: Entry }) => {
   const [{ diagnosis }, dispatch] = useStateValue();
-  console.log(diagnosis);
 
   return (
     <div

@@ -21,6 +21,7 @@ const PatientSingle = () => {
     date: "",
     specialist: "",
     healthCheckRating: 0,
+    type: "HealthCheck"
   });
 
   useEffect(() => {
@@ -35,16 +36,17 @@ const PatientSingle = () => {
       }
     };
     !patient?.ssn && void patientToFetch();
-  }, [dispatch]);
+  }, []);
 
   const addNewEntry = async () => {
     try {
+      console.log("run here");
       const { data: newEntry } = await axios.post<Entry>(
         `${apiBaseUrl}/patients/${id}/entries`,
         entryInput
       );
       console.log("response from submit", newEntry);
-      dispatch(addEntry(newEntry, id));
+      // dispatch(addEntry(newEntry, id));
     } catch (e) {
       console.error(e.response.data);
     }
@@ -55,7 +57,7 @@ const PatientSingle = () => {
     const target = event.target as HTMLInputElement;
     setEntryInput({
       ...entryInput,
-      [target.id]: target.value,
+      [target.id]: target.id === "healthCheckRating" ? parseInt(target.value) : target.value,
     });
   };
 
@@ -74,8 +76,11 @@ const PatientSingle = () => {
       <div>ssn: {patient?.ssn}</div>
       <div>occupation: {patient?.occupation}</div>
 
+      <h3>Entries</h3>
+
       <form
-        onSubmit={() => void addNewEntry()}
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        onSubmit={addNewEntry}
       >
         <label>
           Description:
@@ -108,7 +113,6 @@ const PatientSingle = () => {
         <button type="submit" value="Submit" />
       </form>
 
-      {patient?.entries.length > 0 ? <h3>Entries</h3> : <></>}
       {patient?.entries.map((entry, idx) => (
         <EntryComponent key={idx} entry={entry} />
       ))}

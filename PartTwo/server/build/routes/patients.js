@@ -20,4 +20,10 @@ patientsRouter.post("/", (req, res) => {
     const newPatientEntry = (0, patientsService_1.addPatient)(body);
     res.json(newPatientEntry);
 });
+patientsRouter.post("/:id/entries", (req, res) => {
+    console.log(req.body);
+    const body = (0, proofing_1.newEntryProofing)(req.body);
+    const newEntry = (0, patientsService_1.addEntryToPatient)(req.params.id, body);
+    res.json(newEntry);
+});
 exports.default = patientsRouter;

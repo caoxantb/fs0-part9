@@ -27,6 +27,7 @@ patientsRouter.post("/", (req, res) => {
 });
 
 patientsRouter.post("/:id/entries", (req, res) => {
+  console.log(req.body)
   const body = newEntryProofing(req.body);
   const newEntry = addEntryToPatient(req.params.id, body);
   res.json(newEntry);
